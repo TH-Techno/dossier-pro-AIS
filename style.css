@@ -1,0 +1,386 @@
+/* =======================================================================
+   VARIABLES & RÉINITIALISATION
+   ======================================================================= */
+   :root {
+    --primary-color: #00aaff;
+    --primary-hover: #0088cc;
+    --secondary-color: #005577;
+    --bg-color: #0d0d0d;
+    --container-bg: rgba(31, 31, 31, 0.75);
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --accent-color: #ff4081;
+    --border-color: #333333;
+    --shadow-color: rgba(0, 0, 0, 0.85);
+    --transition-speed: 0.35s;
+    --animation-duration: 0.8s;
+    --font-family: 'Roboto', sans-serif;
+    --blur-amount: 12px;
+  }
+  
+  /* Réinitialisation */
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* =======================================================================
+     STYLES GLOBAUX & TYPOGRAPHIE
+     ======================================================================= */
+  body {
+    font-family: var(--font-family);
+    background: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    opacity: 0.2;
+    z-index: -2;
+    animation: bgShift 60s linear infinite;
+  }
+  @keyframes bgShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 1000px 1000px; }
+  }
+  
+  /* =======================================================================
+     HEADER AVEC EFFET PARALLAX, GLITCH & ANIMATION 3D
+     ======================================================================= */
+  header {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    background: url('https://source.unsplash.com/1600x900/?cyber,technology') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    overflow: hidden;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    mix-blend-mode: overlay;
+    opacity: 0.75;
+    filter: blur(4px);
+    transform: scale(1.1);
+    z-index: 1;
+    animation: pulseGlow 5s ease-in-out infinite alternate;
+  }
+  @keyframes pulseGlow {
+    from { opacity: 0.7; }
+    to { opacity: 0.85; }
+  }
+  header .header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 3.5rem;
+    text-shadow: 3px 3px 10px var(--shadow-color);
+    transform: translateZ(30px) rotateX(5deg);
+    animation: slideDown var(--animation-duration) ease-out;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-40px) rotateX(15deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(5deg); }
+  }
+  /* =======================================================================
+     BARRE DE PROGRESSION
+     ======================================================================= */
+     #progressContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255,255,255,0.1);
+        z-index: 999;
+      }
+      #progressBar {
+        width: 0%;
+        height: 100%;
+        background: var(--primary-color);
+        transition: width var(--transition-speed) ease;
+      }
+      
+  /* =======================================================================
+     LAYOUT : SIDEBAR & CONTENU PRINCIPAL & NEWS
+     ======================================================================= */
+  .layout {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  #toc, #news {
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    backdrop-filter: blur(var(--blur-amount));
+    transition: transform var(--transition-speed) ease;
+  }
+  #toc:hover, #news:hover {
+    transform: scale(1.02);
+  }
+  #toc h2, #news h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--heading-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+  }
+  #toc input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  #toc ul, #news ul {
+    list-style: none;
+  }
+  #toc ul li, #news ul li {
+    margin: 12px 0;
+  }
+  #toc ul li a, #news ul li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color var(--transition-speed) ease;
+  }
+  #toc ul li a:hover, #news ul li a:hover {
+    color: var(--primary-hover);
+  }
+  
+  /* =======================================================================
+     CONTENU PRINCIPAL
+     ======================================================================= */
+  .main-content {
+    background: var(--container-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    backdrop-filter: blur(var(--blur-amount));
+    animation: fadeInUp 0.8s ease-out;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* =======================================================================
+     SECTIONS & COLLAPSIBLES
+     ======================================================================= */
+  .section {
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    transition: background var(--transition-speed) ease;
+  }
+  .section:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .collapsible {
+    cursor: pointer;
+    position: relative;
+    padding-right: 35px;
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+  }
+  .collapsible:hover {
+    color: var(--primary-hover);
+  }
+  .collapsible::after {
+    content: "\25BC";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    transition: transform var(--transition-speed) ease;
+  }
+  .collapsible.active::after {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .section-content {
+    padding-top: 15px;
+    animation: fadeIn 0.4s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* =======================================================================
+     TYPOGRAPHIE DANS LE CONTENU
+     ======================================================================= */
+  .main-content h2,
+  .main-content h3,
+  .main-content h4 {
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 5px;
+  }
+  .main-content p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    text-align: justify;
+  }
+  .main-content ul,
+  .main-content ol {
+    margin: 20px 0;
+    padding-left: 30px;
+  }
+  
+  /* =======================================================================
+     BLOCS DE CODE & COPY BUTTON
+     ======================================================================= */
+  pre {
+    background: #2a2a2a;
+    border-left: 6px solid var(--primary-color);
+    padding: 20px;
+    margin: 30px 0;
+    overflow-x: auto;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    position: relative;
+  }
+  code {
+    background: #2a2a2a;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background var(--transition-speed) ease;
+  }
+  .copy-btn:hover {
+    background: var(--primary-hover);
+  }
+  
+  /* =======================================================================
+     BOUTONS
+     ======================================================================= */
+  .button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background var(--transition-speed) ease;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  .button:hover {
+    background: var(--primary-hover);
+  }
+  
+  /* =======================================================================
+     BOUTON "SCROLL TO TOP"
+     ======================================================================= */
+    /* Style soft pour le bouton "Scroll to Top" */
+    #scrollToTopBtn {
+        display: none; /* S'affiche uniquement lors du scroll */
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.6); /* Fond sombre semi-transparent */
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        border-radius: 50%; /* Bouton rond */
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Ombre légère */
+    }
+    
+    #scrollToTopBtn:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: scale(1.05);
+    }
+  
+    .signature {
+        margin-top: 20px;
+        text-align: center;
+      }
+      
+      .signature p {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--heading-color); /* Ou une couleur qui se marie bien avec votre thème */
+      }
+      
+      .signature img {
+        max-width: 300px;  /* Ajustez cette valeur selon la taille souhaitée pour la signature */
+        width: 100%;
+        height: auto;
+        border: 2px solid var(--primary-color);
+        border-radius: 4px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      }
+  /* =======================================================================
+     RESPONSIVE DESIGN
+     ======================================================================= */
+  @media (max-width: 768px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    #toc, #news {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+      max-height: none;
+      backdrop-filter: none;
+    }
+    .main-content {
+      padding: 20px;
+    }
+    header {
+      height: 220px;
+    }
+    header h1 {
+      font-size: 2.2rem;
+    }
+    #darkModeToggle {
+      top: 10px;
+      right: 10px;
+      padding: 4px 8px;
+    }
+  }
